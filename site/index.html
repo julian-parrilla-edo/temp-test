@@ -1,20 +1,96 @@
 <!DOCTYPE html>
-
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Caddy on Railway</title>
-    <meta name="description" content="Choo Choo!" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="/styles.css?v=1.0" />
-  </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amigo Invisible</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        .input-field {
+            margin: 20px 0;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background: #ff7a7a;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #e06666;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Amigo Invisible</h1>
+        <p id="hint">Bienvenido a la primera pista: Soy amarillo y brillo en el cielo. ¿Qué soy?</p>
+        <div class="input-field">
+            <input type="text" id="answer" placeholder="Escribe tu respuesta aquí">
+        </div>
+        <button onclick="checkAnswer()">Comprobar</button>
+        <p class="message" id="feedback"></p>
+    </div>
 
-  <body>
-    <main>
-      <h1>Caddy on Railway</h1>
-      <p>
-        Choo Choo! This is an example of a Caddy static site running on Railway.
-      </p>
-    </main>
-  </body>
+    <script>
+        const clues = [
+            { hint: "Soy amarillo y brillo en el cielo. ¿Qué soy?", answer: "sol" },
+            { hint: "Soy frío y caigo del cielo en invierno. ¿Qué soy?", answer: "nieve" },
+            { hint: "Tengo agujas pero no soy reloj. ¿Qué soy?", answer: "pino" }
+        ];
+
+        let currentClue = 0;
+
+        function checkAnswer() {
+            const userAnswer = document.getElementById("answer").value.toLowerCase();
+            const feedback = document.getElementById("feedback");
+
+            if (userAnswer === clues[currentClue].answer) {
+                currentClue++;
+                if (currentClue < clues.length) {
+                    document.getElementById("hint").textContent = clues[currentClue].hint;
+                    document.getElementById("answer").value = "";
+                    feedback.textContent = "¡Correcto! Aquí tienes la siguiente pista.";
+                } else {
+                    feedback.textContent = "¡Felicidades! Has terminado todas las pistas.";
+                    document.getElementById("answer").style.display = "none";
+                    document.querySelector("button").style.display = "none";
+                }
+            } else {
+                feedback.textContent = "Respuesta incorrecta. Intenta de nuevo.";
+            }
+        }
+    </script>
+</body>
 </html>
